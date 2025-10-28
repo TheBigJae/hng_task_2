@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
       title: 'Storekeeper App',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.indigo,
+        primarySwatch:  Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: const HomeScreen(),

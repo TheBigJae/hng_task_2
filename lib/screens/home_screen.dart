@@ -64,14 +64,16 @@ class _HomeScreenState extends State<HomeScreen> {
         title: const Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Storekeeper', style: TextStyle(fontWeight: FontWeight.bold)),
+            Text('Storekeeper', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
             Text('Inventory Management', 
-              style: TextStyle(fontSize: 12, fontWeight: FontWeight.normal)),
+              style: TextStyle(fontSize: 12, fontWeight: FontWeight.normal,  color: Colors.white)),
           ],
         ),
       ),
+       
       body: Column(
         children: [
+         
           // Stats Cards
           Container(
             color: Colors.indigo[600],
