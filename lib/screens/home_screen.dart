@@ -348,20 +348,20 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.inventory_2_outlined, size: 80, color: Colors.grey[300]),
+          Icon(Icons.inventory_2_outlined, size: 80, color: Colors.white),
           const SizedBox(height: 16),
           Text(
             'No products yet',
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
-              color: Colors.grey[600],
+              color: Colors.white,
             ),
           ),
           const SizedBox(height: 8),
           Text(
             'Start by adding your first product',
-            style: TextStyle(color: Colors.grey[500]),
+            style: TextStyle(color: Colors.white),
           ),
         ],
       ),
