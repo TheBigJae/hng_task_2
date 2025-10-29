@@ -120,7 +120,7 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.product == null ? 'Add Product' : 'Edit Product'),
+        title: Text(widget.product == null ? 'Add Product' : 'Edit Product', style: TextStyle(color: Colors.white),),
         backgroundColor: Colors.indigo[600],
       ),
       body: Form(
@@ -242,7 +242,7 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
               ),
               child: Text(
                 widget.product == null ? 'Add Product' : 'Update Product',
-                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
               ),
             ),
           ],

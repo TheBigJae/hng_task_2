@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import '../database/database_helper.dart';
 import '../models/product.dart';
@@ -37,14 +38,18 @@ class _HomeScreenState extends State<HomeScreen> {
 
   List<Product> getFilteredProducts() {
     if (searchQuery.isEmpty) return products;
-    return products.where((product) =>
-      product.name.toLowerCase().contains(searchQuery.toLowerCase())
-    ).toList();
+    return products
+        .where(
+          (product) =>
+              product.name.toLowerCase().contains(searchQuery.toLowerCase()),
+        )
+        .toList();
   }
 
   double getTotalValue() {
-    return products.fold(0, (sum, product) => 
-      sum + (product.quantity * product.price)
+    return products.fold(
+      0,
+      (sum, product) => sum + (product.quantity * product.price),
     );
   }
 
@@ -57,87 +62,110 @@ class _HomeScreenState extends State<HomeScreen> {
     final filteredProducts = getFilteredProducts();
 
     return Scaffold(
-      backgroundColor: Colors.grey[50],
+      backgroundColor: Colors.indigo[600],
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.indigo[600],
         title: const Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Storekeeper', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
-            Text('Inventory Management', 
-              style: TextStyle(fontSize: 12, fontWeight: FontWeight.normal,  color: Colors.white)),
+            Text(
+              'Inventory List',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            ),
+            // Text(
+            //   'Inventory Management',
+            //   style: TextStyle(
+            //     fontSize: 12,
+            //     fontWeight: FontWeight.normal,
+            //     color: Colors.white,
+            //   ),
+            // ),
           ],
         ),
       ),
-       
-      body: Column(
-        children: [
-         
-          // Stats Cards
-          Container(
-            color: Colors.indigo[600],
-            padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-            child: Row(
-              children: [
-                Expanded(child: _buildStatCard(
-                  'Products', 
-                  products.length.toString(), 
-                  Icons.inventory_2, 
-                  Colors.blue
-                )),
-                const SizedBox(width: 12),
-                Expanded(child: _buildStatCard(
-                  'Items', 
-                  getTotalItems().toString(), 
-                  Icons.numbers, 
-                  Colors.green
-                )),
-                const SizedBox(width: 12),
-                Expanded(child: _buildStatCard(
-                  'Value', 
-                  '\$${getTotalValue().toStringAsFixed(2)}', 
-                  Icons.attach_money, 
-                  Colors.purple
-                )),
-              ],
-            ),
-          ),
 
-          // Search Bar
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: TextField(
-              decoration: InputDecoration(
-                hintText: 'Search products...',
-                prefixIcon: const Icon(Icons.search),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide.none,
-                ),
-                filled: true,
-                fillColor: Colors.white,
-              ),
-              onChanged: (value) => setState(() => searchQuery = value),
-            ),
-          ),
+      body: SafeArea(
+        child: Column(
+          children: [
 
-          // Products List
-          Expanded(
-            child: isLoading
-              ? const Center(child: CircularProgressIndicator())
-              : filteredProducts.isEmpty
-                ? _buildEmptyState()
-                : ListView.builder(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    itemCount: filteredProducts.length,
-                    itemBuilder: (context, index) {
-                      final product = filteredProducts[index];
-                      return _buildProductCard(product);
-                    },
+
+            // Search Bar
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: TextField(
+                decoration: InputDecoration(
+                  hintText: 'Search products...',
+                  prefixIcon: const Icon(Icons.search),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide.none,
                   ),
-          ),
-        ],
+                  filled: true,
+                  fillColor: Colors.white,
+                ),
+                onChanged: (value) => setState(() => searchQuery = value),
+              ),
+            ),
+            // Stats Cards
+            Container(
+              color: Colors.indigo[600],
+              padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: _buildStatCard(
+                      'Products',
+                      products.length.toString(),
+                      Icons.inventory_2,
+                      Colors.blue,
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: _buildStatCard(
+                      'Items',
+                      getTotalItems().toString(),
+                      Icons.numbers,
+                      Colors.green,
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: _buildStatCard(
+                      'Value',
+                      '\$${getTotalValue().toStringAsFixed(2)}',
+                      Icons.attach_money,
+                      Colors.purple,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+        
+            
+        
+            // Products List
+            Expanded(
+              child:
+                  isLoading
+                      ? const Center(child: CircularProgressIndicator())
+                      : filteredProducts.isEmpty
+                      ? _buildEmptyState()
+                      : ListView.builder(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        itemCount: filteredProducts.length,
+                        itemBuilder: (context, index) {
+                          final product = filteredProducts[index];
+                          return _buildProductCard(product);
+                        },
+                      ),
+            ),
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () async {
@@ -149,14 +177,19 @@ class _HomeScreenState extends State<HomeScreen> {
           );
           refreshProducts();
         },
-        icon: const Icon(Icons.add),
-        label: const Text('Add Product'),
+        icon: const Icon(Icons.add, color: Colors.white),
+        label: const Text('Add Product', style: TextStyle(color: Colors.white)),
         backgroundColor: Colors.indigo[600],
       ),
     );
   }
 
-  Widget _buildStatCard(String label, String value, IconData icon, Color color) {
+  Widget _buildStatCard(
+    String label,
+    String value,
+    IconData icon,
+    Color color,
+  ) {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
@@ -167,10 +200,11 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           Icon(icon, color: color, size: 24),
           const SizedBox(height: 4),
-          Text(value, 
-            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-          Text(label, 
-            style: TextStyle(fontSize: 11, color: Colors.grey[600])),
+          Text(
+            value,
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          Text(label, style: TextStyle(fontSize: 11, color: Colors.grey[600])),
         ],
       ),
     );
@@ -178,6 +212,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildProductCard(Product product) {
     return Card(
+      // color: Colors.transparent,
       margin: const EdgeInsets.only(bottom: 12),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: InkWell(
@@ -205,17 +240,35 @@ class _HomeScreenState extends State<HomeScreen> {
                     colors: [Colors.indigo[100]!, Colors.purple[100]!],
                   ),
                 ),
-                child: product.imagePath != null
-                  ? ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
-                      child: Image.network(
-                        product.imagePath!,
-                        fit: BoxFit.cover,
-                        errorBuilder: (_, __, ___) => 
-                          const Icon(Icons.image, size: 40, color: Colors.grey),
-                      ),
-                    )
-                  : const Icon(Icons.image, size: 40, color: Colors.grey),
+                child:
+                    product.imagePath != null
+                        ? ClipRRect(
+                          borderRadius: BorderRadius.circular(8),
+                          child:
+                              (product.imagePath!.startsWith('http') ||
+                                      product.imagePath!.startsWith('https'))
+                                  ? Image.network(
+                                    product.imagePath!,
+                                    fit: BoxFit.cover,
+                                    errorBuilder:
+                                        (_, __, ___) => const Icon(
+                                          Icons.image,
+                                          size: 40,
+                                          color: Colors.grey,
+                                        ),
+                                  )
+                                  : Image.file(
+                                    File(product.imagePath!),
+                                    fit: BoxFit.cover,
+                                    errorBuilder:
+                                        (_, __, ___) => const Icon(
+                                          Icons.image,
+                                          size: 40,
+                                          color: Colors.grey,
+                                        ),
+                                  ),
+                        )
+                        : const Icon(Icons.image, size: 40, color: Colors.grey),
               ),
               const SizedBox(width: 12),
               // Product Details
@@ -257,28 +310,29 @@ class _HomeScreenState extends State<HomeScreen> {
                 onPressed: () {
                   showDialog(
                     context: context,
-                    builder: (context) => AlertDialog(
-                      title: const Text('Delete Product'),
-                      content: const Text(
-                        'Are you sure you want to delete this product?'
-                      ),
-                      actions: [
-                        TextButton(
-                          onPressed: () => Navigator.pop(context),
-                          child: const Text('Cancel'),
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            deleteProduct(product.id!);
-                            Navigator.pop(context);
-                          },
-                          child: const Text(
-                            'Delete',
-                            style: TextStyle(color: Colors.red),
+                    builder:
+                        (context) => AlertDialog(
+                          title: const Text('Delete Product'),
+                          content: const Text(
+                            'Are you sure you want to delete this product?',
                           ),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.pop(context),
+                              child: const Text('Cancel'),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                deleteProduct(product.id!);
+                                Navigator.pop(context);
+                              },
+                              child: const Text(
+                                'Delete',
+                                style: TextStyle(color: Colors.red),
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
                   );
                 },
               ),
