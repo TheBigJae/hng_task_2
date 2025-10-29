@@ -1,10 +1,13 @@
-# hng_task_2
+# HNG TASK 2 
+Investory List 
 
-A new Flutter project.
+Flutter project.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+This project is a Storekeeper App that helps users manage their product inventory locally.
+
+This is the Release APK Link - https://appetize.io/app/b_pcoc5tfzoqubai3r3zwtdpekhm
 
 A few resources to get you started if this is your first Flutter project:
 
