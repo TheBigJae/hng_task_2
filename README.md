@@ -1,7 +1,8 @@
 # HNG TASK 2 
 Investory List 
 
-Flutter project.
+<img width="1206" height="2622" alt="Simulator Screenshot - iPhone 17 - 2026-01-05 at 13 13 04" src="https://github.com/user-attachments/assets/3d73173c-564d-4042-8f5f-d2aea3c3cfd0" />
+
 
 ## Getting Started
 
